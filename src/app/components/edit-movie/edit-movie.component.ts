@@ -14,6 +14,8 @@ providers: [DatePipe],
   styleUrl: './edit-movie.component.css'
 })
 export class EditMovieComponent {
+
+movieName:string='';
 movie:any = {}; // Placeholder for movie data, to be replaced with actual movie object
 private datePipe = inject(DatePipe);
 constructor(private route: ActivatedRoute,
@@ -22,17 +24,21 @@ constructor(private route: ActivatedRoute,
     
 ) { }
 
+//ngOnInit gets executed when the component is rendered
+//It is used to fetch the movie details based on the title from the route parameters
 ngOnInit()
 {
  // Get the movie title from the route
-  const movieName = this.route.snapshot.paramMap.get('title');
-if(movieName)
+  this.movieName = this.route.snapshot.paramMap.get('title') ?? '';
+if(this.movieName)
 {
-this.movieService.getMovieByTitle(movieName)
+this.movieService.getMovieByTitle(this.movieName)
 .subscribe(response=>{
 console.log('Movie fetched successfully:', response);
-this.movie = response;
+this.movie = response.data; // Assign the fetched movie data to the component's movie property
 
+
+// Format the release date to 'yyyy-MM-dd' format for the input field
 this.movie.releaseDate = this.datePipe.transform(this.movie.releaseDate, 'yyyy-MM-dd');
 
 })
@@ -41,9 +47,10 @@ this.movie.releaseDate = this.datePipe.transform(this.movie.releaseDate, 'yyyy-M
 
 onSubmit()
 {
-  this.movieService.updateMovie(this.movie).
+  this.movieService.updateMovie(this.movieName,this.movie).
 subscribe(response => {
-  console.log('Movie updated successfully:', response);
+  console.log(response.message);
+console.log('Movie updated successfully:', response.data);
   // Navigate back to the movie list or dashboard after successful update
   this.router.navigate(['/movies/list-movies']);})
 }

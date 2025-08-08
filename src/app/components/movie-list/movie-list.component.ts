@@ -4,6 +4,7 @@ import { Movie } from '../../movie';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink,Router } from '@angular/router';
+import { ApiResponse } from '../../api-response';
 
 
 @Component({
@@ -23,8 +24,8 @@ export class MovieListComponent {
 
   loadMovies(): void {
     this.movieService.getMovies()
-      .subscribe((data: Movie[]) => {
-        this.movies = data;
+      .subscribe((data: ApiResponse<Movie[]>) => {
+        this.movies = data.data || [];
         if (this.movies.length === 0) {
           alert('No movies available. Please add some movies first.');
           this.router.navigate(['/movies/add-movie'])

@@ -27,7 +27,7 @@ deleteMovie()
 {
   this.movieService.deleteMovie(this.movieId)
 .subscribe(response=>{ 
-console.log('Movie deleted successfully:', response);
+console.log('Movie deleted successfully');
 // Reset movieId after deletion
 this.movieId = 0;
 alert('Movie deleted successfully');
