@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2>🎬 Movie Dashboard</h2>
+  <nav class="nav nav-pills mb-4">
+
+<!-- - routerLink="add-movie": relative to the current route.
+/movies/add-movie
+ 
+-->
+    <a class="nav-link" routerLink="add-movie" title="Add a new movie to the list">➕ Add Movie</a>
+
+<!-- absolute path using router link   [routerLink]="['......absolute path......']" -->
+ 
+    <a class="nav-link" [routerLink]="['/movies/list-movies']" title="View movies list">📃 Movie List</a>  
+
+
+    <a class="nav-link" [routerLink]="['/movies/edit-movie/title']" title="Edit movie">✏️ Edit "Inception"</a>
+
+
+    <a class="nav-link" [routerLink]="['/movies/delete-movie/1']" title="Delete movie">🗑️ Delete Movie with ID 1</a>
+  </nav>
+
+  <router-outlet></router-outlet>  
+</div>
